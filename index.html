@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPP Kecamatan Kempas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#f4f6f9}/* TOPBAR */ .topbar{ background:linear-gradient(90deg,#1e7e34,#145c24); color:#fff; padding:15px 40px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(0,0,0,.15); position:sticky; top:0; z-index:1000; } .brand{display:flex;align-items:center} .brand img{height:60px;margin-right:15px} .brand-text h1{font-size:20px;font-weight:700} .brand-text p{font-size:13px;opacity:.9}
+
+.menu{display:flex;gap:25px} .menu a{ text-decoration:none; color:#fff; font-size:14px; font-weight:500; cursor:pointer; transition:.3s; padding-bottom:4px } .menu a:hover{border-bottom:2px solid #fff}
+
+/* CONTENT */ .container{padding:40px} .page{display:none} .page.active{display:block}
+
+.card{ background:#fff; padding:25px; border-radius:18px; box-shadow:0 6px 15px rgba(0,0,0,.08); animation:fadeIn .3s ease-in-out; }
+
+.card h2{ color:#1e7e34; margin-bottom:20px; font-size:18px }
+
+table{width:100%;border-collapse:collapse} table th,table td{ border:1px solid #e0e0e0; padding:10px; font-size:13px; text-align:center } table th{background:#e9f5ec}
+
+.footer{ margin-top:60px; text-align:center; font-size:12px; color:#777 }
+
+@keyframes fadeIn{ from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+@media(max-width:900px){ .topbar{flex-direction:column;align-items:flex-start;gap:15px} .menu{flex-wrap:wrap;gap:15px} } </style>
+
+</head>
+<body><div class="topbar">
+<div class="brand">
+<img src="https://www.inhilkab.go.id/assets/portal/img/logos/logo-inhil-big.png" alt="Logo Inhil">
+<div class="brand-text">
+<h1>BPP KECAMATAN KEMPAS</h1>
+<p>Balai Penyuluh Pertanian</p>
+</div>
+</div><div class="menu">
+<a onclick="showPage('ltt')">LTT</a>
+<a onclick="showPage('ltp')">LTP</a>
+<a onclick="showPage('harga')">Harga Gabah</a>
+<a onclick="showPage('sawah')">Lahan Sawah</a>
+<a onclick="showPage('perkebunan')">Perkebunan</a>
+<a onclick="showPage('horti')">Hortikultura</a>
+</div>
+</div><div class="container"><!-- LTT --><div id="ltt" class="page active">
+<div class="card">
+<h2>Luas Tambah Tanam (LTT)</h2>
+<table>
+<tr><th>Komoditi</th><th>Luas (Ha)</th></tr>
+<tr><td>Padi</td><td>-</td></tr>
+<tr><td>Jagung</td><td>-</td></tr>
+<tr><td>Kedelai</td><td>-</td></tr>
+</table>
+</div>
+</div><!-- LTP --><div id="ltp" class="page">
+<div class="card">
+<h2>Luas Tambah Panen (LTP)</h2>
+<table>
+<tr><th>Komoditi</th><th>Luas (Ha)</th></tr>
+<tr><td>Padi</td><td>-</td></tr>
+<tr><td>Jagung</td><td>-</td></tr>
+<tr><td>Kedelai</td><td>-</td></tr>
+</table>
+</div>
+</div><!-- HARGA --><div id="harga" class="page">
+<div class="card">
+<h2>Harga Gabah</h2>
+<table>
+<tr><th>Jenis</th><th>Harga (Rp/Kg)</th></tr>
+<tr><td>Gabah Kering Panen (GKP)</td><td>-</td></tr>
+<tr><td>Gabah Kering Giling (GKG)</td><td>-</td></tr>
+</table>
+</div>
+</div><!-- SAWAH --><div id="sawah" class="page">
+<div class="card">
+<h2>Luas Baku Lahan Sawah per Desa</h2>
+<p>Prototype tampilan data luas baku sawah per desa se-Kecamatan Kempas.</p>
+</div>
+</div><!-- PERKEBUNAN --><div id="perkebunan" class="page">
+<div class="card">
+<h2>Luas Perkebunan per Desa</h2>
+<p>Prototype tampilan data luas perkebunan per desa se-Kecamatan Kempas.</p>
+</div>
+</div><!-- HORTI --><div id="horti" class="page">
+<div class="card">
+<h2>Jumlah Komoditi Hortikultura per Desa</h2>
+<p>Prototype tampilan jumlah komoditi hortikultura masing-masing desa.</p>
+</div>
+</div><div class="footer">
+© 2026 BPP Kecamatan Kempas | Sistem Informasi Pertanian
+</div></div><script>
+function showPage(pageId){
+const pages=document.querySelectorAll('.page');
+pages.forEach(page=>page.classList.remove('active'));
+document.getElementById(pageId).classList.add('active');
+}
+</script></body>
+</html>
