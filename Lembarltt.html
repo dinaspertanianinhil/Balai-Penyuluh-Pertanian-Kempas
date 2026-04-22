@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LTT BPP Kempas</title>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1e7e34;
+  --bg:rgba(255,255,255,0.9);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+
+body{
+  background:url('https://raw.githubusercontent.com/dinaspertanianinhil/Balai-Penyuluh-Pertanian-Kempas/main/WhatsApp%20Image%202026-04-22%20at%2010.24.41.jpeg') no-repeat center/cover;
+}
+
+.overlay{
+  background:rgba(255,255,255,0.85);
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:15px 5%;
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+header img{height:50px}
+
+header h1{
+  font-size:16px;
+  color:var(--primary);
+}
+
+header p{
+  font-size:12px;
+  color:#666;
+}
+
+/* CONTAINER */
+.container{
+  padding:25px 5%;
+}
+
+/* CARD */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--bg);
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+  font-size:12px;
+  color:#777;
+}
+
+.card p{
+  font-size:20px;
+  font-weight:700;
+  color:var(--primary);
+}
+
+/* CHART */
+.chart-box{
+  background:var(--bg);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+
+/* TABLE */
+.table-box{
+  background:var(--bg);
+  padding:15px;
+  border-radius:15px;
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px;
+}
+
+th, td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:center;
+  font-size:13px;
+}
+
+th{
+  background:#f4f6f9;
+}
+
+/* NAV */
+.nav{
+  margin-bottom:20px;
+}
+
+.nav button{
+  padding:8px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin-right:5px;
+}
+
+.nav .active{
+  background:var(--primary);
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<header>
+  <img src="https://www.inhilkab.go.id/assets/portal/img/logos/logo-inhil-big.png">
+  <div>
+    <h1>LTT BPP KECAMATAN KEMPAS</h1>
+    <p>Monitoring Luas Tambah Tanam</p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- NAV -->
+<div class="nav">
+  <button class="active" onclick="showPage('dashboard')">Dashboard</button>
+  <button onclick="showPage('tabel')">Tabel Data</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="cards">
+    <div class="card"><h3>Total LTT</h3><p id="total">0</p></div>
+    <div class="card"><h3>LTT Hari Ini</h3><p id="today">0</p></div>
+    <div class="card"><h3>Jumlah Desa</h3><p id="desa">0</p></div>
+    <div class="card"><h3>Total Laporan</h3><p id="laporan">0</p></div>
+  </div>
+
+  <div class="chart-box">
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+<!-- TABEL -->
+<div id="tabel" style="display:none">
+  <div class="table-box">
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Desa</th>
+          <th>Kelompok</th>
+          <th>Jenis</th>
+          <th>Luas</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbz9BbxHtegnOrlIdwMBjsRRfK1weywnjIXnbX4YgGY-F6egmvMFUO3pqZ5CAXg99ac/exec";
+
+let dataGlobal=[];
+
+function showPage(p){
+  document.getElementById("dashboard").style.display = p==="dashboard"?"block":"none";
+  document.getElementById("tabel").style.display = p==="tabel"?"block":"none";
+
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+function loadData(){
+  fetch(API_URL)
+  .then(res=>res.json())
+  .then(data=>{
+    dataGlobal=data;
+    render();
+  });
+}
+
+function render(){
+  let total=0;
+  let today=0;
+  let desaSet=new Set();
+
+  const tbody=document.querySelector("#table tbody");
+  tbody.innerHTML="";
+
+  const todayStr=new Date().toISOString().slice(0,10);
+
+  let map={};
+
+  dataGlobal.forEach(d=>{
+    let luas=parseFloat(d["LUAS TAMBAH TANAM"])||0;
+
+    total+=luas;
+    if(d.TANGGAL?.includes(todayStr)) today+=luas;
+
+    desaSet.add(d["DESA/KELURAHAN"]);
+
+    map[d.KECAMATAN]=(map[d.KECAMATAN]||0)+luas;
+
+    tbody.innerHTML+=`
+      <tr>
+        <td>${d.TANGGAL}</td>
+        <td>${d["DESA/KELURAHAN"]}</td>
+        <td>${d["KELOMPOK TANI"]}</td>
+        <td>${d["JENIS LTT"]}</td>
+        <td>${luas}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("total").innerText=total.toFixed(2)+" Ha";
+  document.getElementById("today").innerText=today.toFixed(2)+" Ha";
+  document.getElementById("desa").innerText=desaSet.size;
+  document.getElementById("laporan").innerText=dataGlobal.length;
+
+  new Chart(document.getElementById("chart"),{
+    type:'bar',
+    data:{
+      labels:Object.keys(map),
+      datasets:[{
+        data:Object.values(map),
+        backgroundColor:'#1e7e34'
+      }]
+    },
+    options:{plugins:{legend:{display:false}}}
+  });
+}
+
+loadData();
+</script>
+
+</body>
+</html>
