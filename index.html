@@ -8,15 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif
+}
 
-/* BACKGROUND */
 html, body{
   height:100%;
 }
 
+/* BACKGROUND */
 body{
   background:url('https://raw.githubusercontent.com/dinaspertanianinhil/Balai-Penyuluh-Pertanian-Kempas/main/WhatsApp%20Image%202026-04-22%20at%2010.24.41.jpeg') no-repeat center center/cover;
+  display:flex;
+  flex-direction:column;
 }
 
 /* TOPBAR */
@@ -28,72 +35,69 @@ body{
   align-items:center;
   justify-content:space-between;
   box-shadow:0 4px 12px rgba(0,0,0,.15);
-  position:sticky;
-  top:0;
-  z-index:1000;
 }
 
-.brand{display:flex;align-items:center}
-.brand img{height:60px;margin-right:15px}
-
-.brand-text h1{font-size:20px;font-weight:700}
-.brand-text p{font-size:13px;opacity:.9}
-
-.menu{display:flex;gap:25px}
-
-.menu a{
-  text-decoration:none;
-  color:#fff;
-  font-size:14px;
-  font-weight:500;
-  cursor:pointer;
-  transition:.3s;
-  padding-bottom:4px;
+.brand{
+  display:flex;
+  align-items:center
 }
 
-.menu a:hover{
-  border-bottom:2px solid #fff;
+.brand img{
+  height:60px;
+  margin-right:15px
 }
 
-/* CONTENT */
+.brand-text h1{
+  font-size:20px;
+  font-weight:700
+}
+
+.brand-text p{
+  font-size:13px;
+  opacity:.9
+}
+
+/* MENU GRID */
 .container{
-  padding:40px;
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
 }
 
-.card{
-  background:#fff;
-  padding:20px;
-  border-radius:18px;
-  box-shadow:0 6px 15px rgba(0,0,0,.08);
-}
-
-/* IFRAME */
-iframe{
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
   width:100%;
-  height:75vh;
-  border:none;
-  border-radius:15px;
+  max-width:900px;
 }
 
-/* LOADING */
-#loading{
+.menu-card{
+  background:rgba(255,255,255,0.9);
+  padding:30px 20px;
+  border-radius:18px;
   text-align:center;
-  margin-bottom:15px;
-  font-size:14px;
-  color:#555;
-  display:none;
+  text-decoration:none;
+  color:#1e7e34;
+  font-weight:600;
+  box-shadow:0 6px 15px rgba(0,0,0,.1);
+  transition:.3s;
 }
 
+.menu-card:hover{
+  transform:translateY(-5px);
+  background:#1e7e34;
+  color:#fff;
+}
+
+/* FOOTER */
 .footer{
-  margin-top:20px;
   text-align:center;
+  padding:15px;
   font-size:12px;
-  color:#777;
-}
-
-@media(max-width:900px){
-  .topbar{flex-direction:column;align-items:flex-start;gap:15px}
-  .menu{flex-wrap:wrap;gap:15px}
+  color:#eee;
 }
 </style>
 
@@ -109,60 +113,41 @@ iframe{
       <p>Balai Penyuluh Pertanian</p>
     </div>
   </div>
-
-  <!-- MENU -->
-  <div class="menu">
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/PortalTPH/Laporanbulananltt.html', this)">LTT</a>
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/LTP-Dashboard/', this)">LTP</a>
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Harga-Gabah/', this)">Harga Gabah</a>
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Lahan-Sawah/', this)">Lahan Sawah</a>
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Perkebunan/', this)">Perkebunan</a>
-    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Hortikultura/', this)">Hortikultura</a>
-  </div>
 </div>
 
 <div class="container">
+  <div class="menu-grid">
 
-  <div class="card">
-    
-    <div id="loading">Loading dashboard...</div>
+    <a href="https://dinaspertanianinhil.github.io/PortalTPH/Laporanbulananltt.html" class="menu-card">
+      LTT
+    </a>
 
-    <iframe id="frame"></iframe>
+    <a href="https://dinaspertanianinhil.github.io/LTP-Dashboard/" class="menu-card">
+      LTP
+    </a>
+
+    <a href="https://dinaspertanianinhil.github.io/Harga-Gabah/" class="menu-card">
+      Harga Gabah
+    </a>
+
+    <a href="https://dinaspertanianinhil.github.io/Lahan-Sawah/" class="menu-card">
+      Lahan Sawah
+    </a>
+
+    <a href="https://dinaspertanianinhil.github.io/Perkebunan/" class="menu-card">
+      Perkebunan
+    </a>
+
+    <a href="https://dinaspertanianinhil.github.io/Hortikultura/" class="menu-card">
+      Hortikultura
+    </a>
 
   </div>
-
-  <div class="footer">
-    © 2026 BPP Kecamatan Kempas | Sistem Informasi Pertanian
-  </div>
-
 </div>
 
-<script>
-function loadPage(url, el){
-  const frame = document.getElementById("frame");
-  const loading = document.getElementById("loading");
-
-  // loading tampil
-  loading.style.display = "block";
-
-  // ganti halaman
-  frame.src = url;
-
-  // efek loading hilang
-  frame.onload = function(){
-    loading.style.display = "none";
-  }
-
-  // aktif menu (highlight)
-  document.querySelectorAll(".menu a").forEach(a=>a.style.borderBottom="none");
-  el.style.borderBottom = "2px solid #fff";
-}
-
-// AUTO LOAD AWAL
-window.onload = function(){
-  loadPage('https://dinaspertanianinhil.github.io/PortalTPH/Tampilltt.html', document.querySelector(".menu a"));
-}
-</script>
+<div class="footer">
+  © 2026 BPP Kecamatan Kempas | Portal Dashboard
+</div>
 
 </body>
 </html>
