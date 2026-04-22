@@ -1,96 +1,168 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id"> 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BPP Kecamatan Kempas</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:#f4f6f9}/* TOPBAR */ .topbar{ background:linear-gradient(90deg,#1e7e34,#145c24); color:#fff; padding:15px 40px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 4px 12px rgba(0,0,0,.15); position:sticky; top:0; z-index:1000; } .brand{display:flex;align-items:center} .brand img{height:60px;margin-right:15px} .brand-text h1{font-size:20px;font-weight:700} .brand-text p{font-size:13px;opacity:.9}
 
-.menu{display:flex;gap:25px} .menu a{ text-decoration:none; color:#fff; font-size:14px; font-weight:500; cursor:pointer; transition:.3s; padding-bottom:4px } .menu a:hover{border-bottom:2px solid #fff}
+/* BACKGROUND */
+html, body{
+  height:100%;
+}
 
-/* CONTENT */ .container{padding:40px} .page{display:none} .page.active{display:block}
+body{
+  background:url('https://raw.githubusercontent.com/dinaspertanianinhil/Balai-Penyuluh-Pertanian-Kempas/main/WhatsApp%20Image%202026-04-22%20at%2010.24.41.jpeg') no-repeat center center/cover;
+}
 
-.card{ background:#fff; padding:25px; border-radius:18px; box-shadow:0 6px 15px rgba(0,0,0,.08); animation:fadeIn .3s ease-in-out; }
+/* TOPBAR */
+.topbar{
+  background:linear-gradient(90deg,#1e7e34,#145c24);
+  color:#fff;
+  padding:15px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
 
-.card h2{ color:#1e7e34; margin-bottom:20px; font-size:18px }
+.brand{display:flex;align-items:center}
+.brand img{height:60px;margin-right:15px}
 
-table{width:100%;border-collapse:collapse} table th,table td{ border:1px solid #e0e0e0; padding:10px; font-size:13px; text-align:center } table th{background:#e9f5ec}
+.brand-text h1{font-size:20px;font-weight:700}
+.brand-text p{font-size:13px;opacity:.9}
 
-.footer{ margin-top:60px; text-align:center; font-size:12px; color:#777 }
+.menu{display:flex;gap:25px}
 
-@keyframes fadeIn{ from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.menu a{
+  text-decoration:none;
+  color:#fff;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:.3s;
+  padding-bottom:4px;
+}
 
-@media(max-width:900px){ .topbar{flex-direction:column;align-items:flex-start;gap:15px} .menu{flex-wrap:wrap;gap:15px} } </style>
+.menu a:hover{
+  border-bottom:2px solid #fff;
+}
+
+/* CONTENT */
+.container{
+  padding:40px;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 6px 15px rgba(0,0,0,.08);
+}
+
+/* IFRAME */
+iframe{
+  width:100%;
+  height:75vh;
+  border:none;
+  border-radius:15px;
+}
+
+/* LOADING */
+#loading{
+  text-align:center;
+  margin-bottom:15px;
+  font-size:14px;
+  color:#555;
+  display:none;
+}
+
+.footer{
+  margin-top:20px;
+  text-align:center;
+  font-size:12px;
+  color:#777;
+}
+
+@media(max-width:900px){
+  .topbar{flex-direction:column;align-items:flex-start;gap:15px}
+  .menu{flex-wrap:wrap;gap:15px}
+}
+</style>
 
 </head>
-<body><div class="topbar">
-<div class="brand">
-<img src="https://www.inhilkab.go.id/assets/portal/img/logos/logo-inhil-big.png" alt="Logo Inhil">
-<div class="brand-text">
-<h1>BPP KECAMATAN KEMPAS</h1>
-<p>Balai Penyuluh Pertanian</p>
+
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="https://www.inhilkab.go.id/assets/portal/img/logos/logo-inhil-big.png">
+    <div class="brand-text">
+      <h1>BPP KECAMATAN KEMPAS</h1>
+      <p>Balai Penyuluh Pertanian</p>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <div class="menu">
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/PortalTPH/Laporanbulananltt.html', this)">LTT</a>
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/LTP-Dashboard/', this)">LTP</a>
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Harga-Gabah/', this)">Harga Gabah</a>
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Lahan-Sawah/', this)">Lahan Sawah</a>
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Perkebunan/', this)">Perkebunan</a>
+    <a onclick="loadPage('https://dinaspertanianinhil.github.io/Hortikultura/', this)">Hortikultura</a>
+  </div>
 </div>
-</div><div class="menu">
-<a onclick="showPage('ltt')">LTT</a>
-<a onclick="showPage('ltp')">LTP</a>
-<a onclick="showPage('harga')">Harga Gabah</a>
-<a onclick="showPage('sawah')">Lahan Sawah</a>
-<a onclick="showPage('perkebunan')">Perkebunan</a>
-<a onclick="showPage('horti')">Hortikultura</a>
+
+<div class="container">
+
+  <div class="card">
+    
+    <div id="loading">Loading dashboard...</div>
+
+    <iframe id="frame"></iframe>
+
+  </div>
+
+  <div class="footer">
+    © 2026 BPP Kecamatan Kempas | Sistem Informasi Pertanian
+  </div>
+
 </div>
-</div><div class="container"><!-- LTT --><div id="ltt" class="page active">
-<div class="card">
-<h2>Luas Tambah Tanam (LTT)</h2>
-<table>
-<tr><th>Komoditi</th><th>Luas (Ha)</th></tr>
-<tr><td>Padi</td><td>-</td></tr>
-<tr><td>Jagung</td><td>-</td></tr>
-<tr><td>Kedelai</td><td>-</td></tr>
-</table>
-</div>
-</div><!-- LTP --><div id="ltp" class="page">
-<div class="card">
-<h2>Luas Tambah Panen (LTP)</h2>
-<table>
-<tr><th>Komoditi</th><th>Luas (Ha)</th></tr>
-<tr><td>Padi</td><td>-</td></tr>
-<tr><td>Jagung</td><td>-</td></tr>
-<tr><td>Kedelai</td><td>-</td></tr>
-</table>
-</div>
-</div><!-- HARGA --><div id="harga" class="page">
-<div class="card">
-<h2>Harga Gabah</h2>
-<table>
-<tr><th>Jenis</th><th>Harga (Rp/Kg)</th></tr>
-<tr><td>Gabah Kering Panen (GKP)</td><td>-</td></tr>
-<tr><td>Gabah Kering Giling (GKG)</td><td>-</td></tr>
-</table>
-</div>
-</div><!-- SAWAH --><div id="sawah" class="page">
-<div class="card">
-<h2>Luas Baku Lahan Sawah per Desa</h2>
-<p>Prototype tampilan data luas baku sawah per desa se-Kecamatan Kempas.</p>
-</div>
-</div><!-- PERKEBUNAN --><div id="perkebunan" class="page">
-<div class="card">
-<h2>Luas Perkebunan per Desa</h2>
-<p>Prototype tampilan data luas perkebunan per desa se-Kecamatan Kempas.</p>
-</div>
-</div><!-- HORTI --><div id="horti" class="page">
-<div class="card">
-<h2>Jumlah Komoditi Hortikultura per Desa</h2>
-<p>Prototype tampilan jumlah komoditi hortikultura masing-masing desa.</p>
-</div>
-</div><div class="footer">
-© 2026 BPP Kecamatan Kempas | Sistem Informasi Pertanian
-</div></div><script>
-function showPage(pageId){
-const pages=document.querySelectorAll('.page');
-pages.forEach(page=>page.classList.remove('active'));
-document.getElementById(pageId).classList.add('active');
+
+<script>
+function loadPage(url, el){
+  const frame = document.getElementById("frame");
+  const loading = document.getElementById("loading");
+
+  // loading tampil
+  loading.style.display = "block";
+
+  // ganti halaman
+  frame.src = url;
+
+  // efek loading hilang
+  frame.onload = function(){
+    loading.style.display = "none";
+  }
+
+  // aktif menu (highlight)
+  document.querySelectorAll(".menu a").forEach(a=>a.style.borderBottom="none");
+  el.style.borderBottom = "2px solid #fff";
 }
-</script></body>
+
+// AUTO LOAD AWAL
+window.onload = function(){
+  loadPage('https://dinaspertanianinhil.github.io/PortalTPH/Tampilltt.html', document.querySelector(".menu a"));
+}
+</script>
+
+</body>
 </html>
