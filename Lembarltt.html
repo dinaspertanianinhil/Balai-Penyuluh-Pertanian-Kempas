@@ -224,7 +224,12 @@ function render(){
 
   let map={};
 
-  dataGlobal.forEach(d=>{
+  // 🔥 FILTER KHUSUS KEMPAS
+  const dataFilter = dataGlobal.filter(d => 
+    (d.KECAMATAN || "").toUpperCase().includes("KEMPAS")
+  );
+
+  dataFilter.forEach(d=>{
     let luas=parseFloat(d["LUAS TAMBAH TANAM"])||0;
 
     total+=luas;
@@ -232,7 +237,7 @@ function render(){
 
     desaSet.add(d["DESA/KELURAHAN"]);
 
-    map[d.KECAMATAN]=(map[d.KECAMATAN]||0)+luas;
+    map[d["DESA/KELURAHAN"]] = (map[d["DESA/KELURAHAN"]]||0)+luas;
 
     tbody.innerHTML+=`
       <tr>
@@ -248,8 +253,9 @@ function render(){
   document.getElementById("total").innerText=total.toFixed(2)+" Ha";
   document.getElementById("today").innerText=today.toFixed(2)+" Ha";
   document.getElementById("desa").innerText=desaSet.size;
-  document.getElementById("laporan").innerText=dataGlobal.length;
+  document.getElementById("laporan").innerText=dataFilter.length;
 
+  // 🔥 CHART BERDASARKAN DESA (BUKAN KECAMATAN LAGI)
   new Chart(document.getElementById("chart"),{
     type:'bar',
     data:{
@@ -259,7 +265,10 @@ function render(){
         backgroundColor:'#1e7e34'
       }]
     },
-    options:{plugins:{legend:{display:false}}}
+    options:{
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{autoSkip:false}}}
+    }
   });
 }
 
